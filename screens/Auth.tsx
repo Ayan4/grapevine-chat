@@ -5,7 +5,7 @@ import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from '../colors';
 import { LoginScreenProps, SignupScreenProps } from '../typings/NavigationTypes';
 const bgImage = require("../assets/backImage.png");
 
-export default function Login({route, navigation}: LoginScreenProps | SignupScreenProps){
+export default function Auth({route, navigation}: LoginScreenProps | SignupScreenProps){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
