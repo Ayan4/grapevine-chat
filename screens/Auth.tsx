@@ -1,16 +1,47 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from '../colors';
-import { LoginScreenProps, SignupScreenProps } from '../typings/NavigationTypes';
+import { auth } from '../config/firebase';
+import { setUserNameWithId } from '../network/AuthApiCall';
+import { LoginScreenProps, SignupScreenProps } from '../types/NavigationTypes';
 const bgImage = require("../assets/backImage.png");
 
 export default function Auth({route, navigation}: LoginScreenProps | SignupScreenProps){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+
+    const [ createUserWithEmailAndPassword ] = useCreateUserWithEmailAndPassword(auth);
+    const [ signInWithEmailAndPassword ] = useSignInWithEmailAndPassword(auth);
 
     const isSignupScreen: boolean | undefined = route.params?.isSignup;
-    const headerText = isSignupScreen ? 'Sign Up' : 'Login'; 
+    const headerText = isSignupScreen ? 'Sign Up' : 'Login';
+
+    function handleSubmit(){
+        if(email && password){
+            if(isSignupScreen){
+                // Signing up a new user and storing the username in the DB.
+                createUserWithEmailAndPassword(email, password).then((userCreds) => userCreds && setUserNameWithId(userCreds.user.uid, username));
+            }else{
+                // Login
+                signInWithEmailAndPassword(email, password).then((result) => console.log({result}));
+            }
+        }
+    }
+
+    const userNameTextInput = isSignupScreen && (
+        <TextInput
+            style={styles.input}
+            placeholder='Enter a username'
+            placeholderTextColor="#606060"
+            autoCapitalize='none'
+            keyboardType='email-address'
+            textContentType='emailAddress'
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+        />
+    )
 
     return(
         <View style={styles.container}>
@@ -23,11 +54,11 @@ export default function Auth({route, navigation}: LoginScreenProps | SignupScree
                         placeholder='Enter your email'
                         placeholderTextColor="#606060"
                         autoCapitalize='none'
-                        keyboardType='email-address'
-                        textContentType='emailAddress'
+                        keyboardType='default'
                         value={email}
                         onChangeText={(text) => setEmail(text)}
                     />
+                    {userNameTextInput}
                     <TextInput
                         style={styles.input}
                         placeholder='Enter your password'
@@ -40,7 +71,7 @@ export default function Auth({route, navigation}: LoginScreenProps | SignupScree
                         onChangeText={(text) => setPassword(text)}
                     />
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                         <Text style={styles.buttonText}>{headerText}</Text>
                     </TouchableOpacity>
 
