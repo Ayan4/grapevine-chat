@@ -1,6 +1,9 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContextProvider";
+import { createChatApi } from "../network/FirestoreApiCall";
 
 interface UserChatCardWidgetProps {
     username: string;
@@ -8,13 +11,19 @@ interface UserChatCardWidgetProps {
   }
 
 export default function UserChatCardWidget({username, uid}: UserChatCardWidgetProps){
+    const {currentUser} = useContext(AuthContext);
+
+    async function handleSelect(){
+        await createChatApi(currentUser, username, uid);
+    }
+
     return(
-        <View style={styles.container}>
+        <Pressable onPress={handleSelect} style={styles.container}>
             <View style={styles.iconWrapper}>
                 <SimpleLineIcons style={styles.icon} name="user" size={24} color={PRIMARY} />
             </View>
             <Text style={styles.username}>{username}</Text>
-        </View>
+        </Pressable>
     )
 };
 

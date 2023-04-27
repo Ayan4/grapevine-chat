@@ -1,4 +1,4 @@
-import { doc, setDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs, query, where, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { database } from "../config/firebase";
 import { User } from "../types/UserTypes";
 
@@ -24,4 +24,33 @@ export const getAllUsersApi = async (uid: string | undefined): Promise<User[] | 
         return userDoc.data() as User;
     })
     return userArray as User[];
+}
+
+export const createChatApi = async (currentUser: any, username: string, uid: string) => {
+    const combinedId = currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid;
+        try{
+            const res = await getDoc(doc(database, 'chats', combinedId));
+            if(!res.exists()){
+                // create a chat in new common chat collection if empty.
+                await setDoc(doc(database, 'chats', combinedId), {messages: []})
+                // update userChats collection of authenticated user.
+                await updateDoc(doc(database, 'userChats', currentUser.uid), {
+                    [combinedId+".userInfo"]: {
+                        uid,
+                        username
+                    },
+                    [combinedId+".date"]: serverTimestamp()
+                });
+                // update userChats collection for the other user.
+                await updateDoc(doc(database, 'userChats', uid), {
+                    [combinedId+".userInfo"]: {
+                        uid: currentUser.uid,
+                        username: currentUser.username
+                    },
+                    [combinedId+".date"]: serverTimestamp()
+                });
+            }
+        }catch(err){
+            console.log('Chat creation error', err)
+        }
 }
