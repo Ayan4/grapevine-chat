@@ -6,19 +6,15 @@ import { searchUserByUsernameApi } from "../network/FirestoreApiCall";
 import { User } from "../types/UserTypes";
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function SearchWidget(){
-    const [username, setUsername] = useState<string>('');
-    const [user, setUser] = useState<User | null>(null);
+type SearchWidgetProps = {
+    setUsernameQuery: React.Dispatch<React.SetStateAction<string>>
+  }
 
-    async function handleUserSearch(){
-        const returnVal = await searchUserByUsernameApi(username);
-        returnVal && setUser(returnVal);
-    }
-
+export default function SearchWidget({setUsernameQuery}: SearchWidgetProps){
     return(
         <View style={styles.container}>
             <FontAwesome style={styles.icon} name="search" size={24} color={WHITE_LIGHT} />
-            <TextInput returnKeyType="search" onChangeText={setUsername} onSubmitEditing={handleUserSearch} placeholder="Search for a Friend" placeholderTextColor={WHITE_LIGHT} style={styles.searchInput}/>
+            <TextInput returnKeyType="search" onChangeText={setUsernameQuery} placeholder="Search for a Friend" placeholderTextColor={WHITE_LIGHT} style={styles.searchInput}/>
         </View>
     ) 
 }
@@ -27,7 +23,9 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         paddingHorizontal: 10,
-        position: 'relative'
+        position: 'relative',
+        borderBottomWidth: 1,
+        borderBottomColor: BG_BLACK_LIGHT
     },
     searchInput: {
         height: 50,

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
+import { BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
 
 interface UserChatCardWidgetProps {
     username: string;
@@ -19,16 +19,20 @@ export default function UserChatCardWidget({username}: UserChatCardWidgetProps){
 
 const styles = StyleSheet.create({
     container: {
+        margin: 10,
         padding: 10,
-        borderWidth: 1,
         borderColor: BG_BLACK_LIGHT,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 80
+        height: 80,
+        backgroundColor: BG_BLACK_LIGHT,
+        borderRadius: 10
+
     },
     username: {
         color: WHITE_LIGHT,
-        fontSize: 20
+        fontSize: 20,
+        // alignSelf: 'flex-start'
     },
     iconWrapper: {
         borderWidth: 1,
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 20
+        marginRight: 15
     },
     icon: {
         padding: 12,
