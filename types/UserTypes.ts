@@ -8,6 +8,9 @@ export type userChats = {
       seconds: number;
       nanoseconds: number;
     };
+    lastMessage: {
+        text: string
+    }
     userInfo: User;
 };
 

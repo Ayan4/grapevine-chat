@@ -35,19 +35,19 @@ export const createChatApi = async (currentUser: any, username: string, uid: str
                 await setDoc(doc(database, 'chats', combinedId), {messages: []})
                 // update userChats collection of authenticated user.
                 await updateDoc(doc(database, 'userChats', currentUser.uid), {
-                    [combinedId+".userInfo"]: {
+                    [combinedId + ".userInfo"]: {
                         uid,
                         username
                     },
-                    [combinedId+".date"]: serverTimestamp()
+                    [combinedId + ".date"]: serverTimestamp()
                 });
                 // update userChats collection for the other user.
                 await updateDoc(doc(database, 'userChats', uid), {
-                    [combinedId+".userInfo"]: {
+                    [combinedId + ".userInfo"]: {
                         uid: currentUser.uid,
-                        username: currentUser.username
+                        username: currentUser.displayName
                     },
-                    [combinedId+".date"]: serverTimestamp()
+                    [combinedId + ".date"]: serverTimestamp()
                 });
             }
         }catch(err){

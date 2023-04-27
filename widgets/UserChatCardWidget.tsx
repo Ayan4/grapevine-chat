@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
+import { BG_BLACK_LIGHT, GRAY, PRIMARY, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { createChatApi } from "../network/FirestoreApiCall";
@@ -11,10 +11,11 @@ import { capitalizeFirstLetter } from "../helper/Util";
 interface UserChatCardWidgetProps {
     username: string;
     uid: string;
-    navigation: any
+    navigation: any;
+    lastText?: string
   }
 
-export default function UserChatCardWidget({username, uid, navigation}: UserChatCardWidgetProps){
+export default function UserChatCardWidget({username, uid, navigation, lastText}: UserChatCardWidgetProps){
     const {currentUser} = useContext(AuthContext);
     const {dispatchAction} = useContext(ChatContext);
 
@@ -29,7 +30,10 @@ export default function UserChatCardWidget({username, uid, navigation}: UserChat
             <View style={styles.iconWrapper}>
                 <SimpleLineIcons style={styles.icon} name="user" size={24} color={PRIMARY} />
             </View>
-            <Text style={styles.username}>{capitalizeFirstLetter(username)}</Text>
+            <View style={styles.nameAndTextWrapper}>
+                <Text style={styles.username}>{capitalizeFirstLetter(username)}</Text>
+                {lastText && <Text style={styles.message}>{lastText}</Text>}
+            </View>
         </Pressable>
     )
 };
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
         borderColor: BG_BLACK_LIGHT,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 80,
+        height: 100,
         backgroundColor: BG_BLACK_LIGHT,
         borderRadius: 10
 
@@ -60,5 +64,11 @@ const styles = StyleSheet.create({
     },
     icon: {
         padding: 12,
+    },
+    message: {
+        color: GRAY
+    },
+    nameAndTextWrapper: {
+        justifyContent: 'center'
     }
 })

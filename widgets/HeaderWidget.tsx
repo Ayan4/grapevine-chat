@@ -12,6 +12,7 @@ import { capitalizeFirstLetter } from "../helper/Util";
 export default function HeaderWidget(props: any){
     const {currentUser} = useContext(AuthContext);
     const routeName = props?.route?.name;
+
     return(
         <View style={[styles.header, routeName && styles.headerHome]}>
             <StatusBar backgroundColor={BG_BLACK}/>
