@@ -25,7 +25,7 @@ export default function Auth({route, navigation}: LoginScreenProps | SignupScree
                 createUserWithEmailAndPassword(email, password).then((userCreds) => userCreds && setUserNameWithId(userCreds.user.uid, username));
             }else{
                 // Login
-                signInWithEmailAndPassword(email, password).then((result) => console.log({result}));
+                signInWithEmailAndPassword(email, password).then((result) => result);
             }
         }
     }
