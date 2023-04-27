@@ -1,22 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet, FlatList } from "react-native";
 import { BG_BLACK, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
 import { AuthContext } from "../context/AuthContextProvider";
+import { searchUser } from "../helper/Util";
 import { getAllUsersApi } from "../network/FirestoreApiCall";
 import { User } from "../types/UserTypes";
 import SearchWidget from "../widgets/SearchWidget";
 import UserChatCardWidget from "../widgets/UserChatCardWidget";
 
 export default function HomePage(){
-    const {currentUser} = useContext(AuthContext);
     const [users, setUsers] = useState<User[] | undefined>();
     const [usernameQuery, setUsernameQuery] = useState<string>('');
+    const {currentUser} = useContext(AuthContext);
 
-    function searchUsers(users: User[], query: string) {
-        return users.filter(user => user.username.toLowerCase().includes(query.toLowerCase()));
-      }
-
-    const filteredUsers = users && searchUsers(users, usernameQuery);
+    // all user list will be filtered upon search
+    const filteredUsers = users && searchUser(users, usernameQuery);
 
     useEffect(() => {
         (async () => {
@@ -31,9 +29,7 @@ export default function HomePage(){
         <SafeAreaView style={styles.container}>
             <SearchWidget setUsernameQuery={setUsernameQuery} />
             <Text style={styles.heading}>Chats</Text>
-            {filteredUsers?.map(user => {
-                return <UserChatCardWidget key={user.uid} username={user.username} />
-            })}
+            <FlatList data={filteredUsers} renderItem={({item}) => <UserChatCardWidget username={item.username} uid={item.uid} />} keyExtractor={item => item.uid} />
         </SafeAreaView>
     )
 }

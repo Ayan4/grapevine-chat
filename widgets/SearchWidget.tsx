@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { StyleSheet, View} from "react-native";
 import { TextInput } from "react-native";
 import { BG_BLACK_LIGHT, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
-import { searchUserByUsernameApi } from "../network/FirestoreApiCall";
-import { User } from "../types/UserTypes";
 import { FontAwesome } from '@expo/vector-icons';
 
 type SearchWidgetProps = {

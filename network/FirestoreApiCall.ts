@@ -11,20 +11,7 @@ export const setUserNameWithIdApi = async (uid: string, username: string) => {
     await setUserChatsApi(uid);
 };
 
-export const searchUserByUsernameApi = async (username: string): Promise<User | undefined> => {
-    const userCollection = collection(database, 'users');
-    const q = query(userCollection, where('username', "==", username.toLowerCase()));
-    const querySnapShot = await getDocs(q);
-    const docs = querySnapShot.docs;
-    if(docs.length === 0){
-        // user not found
-        return undefined
-    }
-    const user = docs[0].data() as User
-    return user as User;
-};
-
-export const getAllUsersApi = async (uid: string): Promise<User[] | undefined> => {
+export const getAllUsersApi = async (uid: string | undefined): Promise<User[] | undefined> => {
     const userCollection = collection(database, 'users');
     const q = query(userCollection, where('uid', "!=", uid));
     const querySnapShot = await getDocs(q);

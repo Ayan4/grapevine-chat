@@ -4,9 +4,10 @@ import { BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
 
 interface UserChatCardWidgetProps {
     username: string;
+    uid: string;
   }
 
-export default function UserChatCardWidget({username}: UserChatCardWidgetProps){
+export default function UserChatCardWidget({username, uid}: UserChatCardWidgetProps){
     return(
         <View style={styles.container}>
             <View style={styles.iconWrapper}>
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
     username: {
         color: WHITE_LIGHT,
         fontSize: 20,
-        // alignSelf: 'flex-start'
     },
     iconWrapper: {
         borderWidth: 1,
