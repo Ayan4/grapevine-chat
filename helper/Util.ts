@@ -5,7 +5,7 @@ export function searchChatUser(users: userChatTree[], query: string): userChatTr
 }
 
 export function searchUser(users: User[], query: string): User[] {
-    return users.filter(user => user?.username.toLowerCase().includes(query.toLowerCase()));
+    return users && users.filter(user => user.username?.toLowerCase().includes(query.toLowerCase()));
 }
 
 export function capitalizeFirstLetter(username: string | undefined): string | undefined{

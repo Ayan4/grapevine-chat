@@ -1,6 +1,6 @@
 import { StyleSheet, View} from "react-native";
 import { TextInput } from "react-native";
-import { BG_BLACK_LIGHT, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
+import { BG_BLACK_LIGHT, WHITE_LIGHT } from "../colors";
 import { FontAwesome } from '@expo/vector-icons';
 
 type SearchWidgetProps = {

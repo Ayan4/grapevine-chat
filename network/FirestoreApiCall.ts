@@ -1,4 +1,5 @@
-import { doc, setDoc, collection, getDocs, query, where, getDoc, updateDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs, query, where, getDoc, updateDoc, serverTimestamp, onSnapshot, arrayUnion } from "firebase/firestore";
+import { IMessage } from "react-native-gifted-chat";
 import { database } from "../config/firebase";
 import { User, userChats } from "../types/UserTypes";
 
@@ -54,3 +55,31 @@ export const createChatApi = async (currentUser: any, username: string, uid: str
             console.log('Chat creation error', err)
         }
 };
+
+export const updateChatCollectionsApi = async (messages: IMessage[], userData: any, currentUser: any): Promise<void> => {
+    const {_id, createdAt, text, user} = messages[0];
+        await updateDoc(doc(database, 'chats', userData.chatId), {
+            messages: arrayUnion({
+                _id,
+                text,
+                createdAt: new Date(createdAt),
+                senderId: currentUser.uid,
+                user
+            })
+        });
+
+        // update last message and time for both, sender and receiver
+        await updateDoc(doc(database, 'userChats', currentUser.uid), {
+            [userData.chatId + ".lastMessage"]: {
+                text
+            },
+            [userData.chatId + ".date"]: serverTimestamp(),
+        })
+        // update for receiver
+        await updateDoc(doc(database, 'userChats', userData.user.uid), {
+            [userData.chatId + ".lastMessage"]: {
+                text
+            },
+            [userData.chatId + ".date"]: serverTimestamp()
+        })
+}

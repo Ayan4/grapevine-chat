@@ -3,15 +3,16 @@ import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacit
 import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from '../colors';
 import { loginApi, signUpApi } from '../network/AuthApiCall';
 import { LoginScreenProps, SignupScreenProps } from '../types/NavigationTypes';
+import { LOGIN_SIGNUP_CONSTANTS } from '../types/UserTypes';
 const bgImage = require("../assets/backImage.png");
 
 export default function Auth({route, navigation}: LoginScreenProps | SignupScreenProps){
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
 
     const isSignupScreen: boolean | undefined = route.params?.isSignup;
-    const headerText = isSignupScreen ? 'Sign Up' : 'Login';
+    const headerText = isSignupScreen ? LOGIN_SIGNUP_CONSTANTS.SIGN_UP : LOGIN_SIGNUP_CONSTANTS.LOGIN;
 
     function handleSubmit(){
         if(email && password){
@@ -71,7 +72,7 @@ export default function Auth({route, navigation}: LoginScreenProps | SignupScree
                     <View style={styles.signUpSection}>
                         <Text style={styles.signUpSectionText}>{isSignupScreen ? 'Already have an account?' : 'Don\'t have an account?'}</Text>
                         <TouchableOpacity onPress={() => navigation.navigate(isSignupScreen ? 'Login' : 'Signup')}>
-                            <Text style={styles.signUpLink}>{isSignupScreen ? 'Login' : 'Sign Up'}</Text>
+                            <Text style={styles.signUpLink}>{isSignupScreen ? LOGIN_SIGNUP_CONSTANTS.LOGIN : LOGIN_SIGNUP_CONSTANTS.SIGN_UP}</Text>
                         </TouchableOpacity>
                     </View>
                 </SafeAreaView>

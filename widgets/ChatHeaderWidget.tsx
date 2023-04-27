@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
-import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
+import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
 import { ChatContext } from "../context/ChatContextProvider";
-import { SimpleLineIcons, AntDesign} from '@expo/vector-icons';
+import { FontAwesome5, AntDesign} from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { capitalizeFirstLetter } from "../helper/Util";
 
@@ -19,7 +19,7 @@ export default function ChatHeaderWidget(){
                 <AntDesign name="arrowleft" size={26} color={WHITE_LIGHT} />
             </TouchableOpacity>
             <View style={styles.iconWrapper}>
-                <SimpleLineIcons style={styles.icon} name="user" size={30} color={PRIMARY} />
+                <FontAwesome5 style={styles.icon} name="user-alt" size={30} color={PRIMARY} />
             </View>
             <Text style={styles.usernameText}>{capitalizeFirstLetter(user.username)}</Text>
         </View>
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     iconWrapper: {
-        borderWidth: 1,
-        borderColor: WHITE_LIGHT,
+        borderWidth: 2,
+        borderColor: PRIMARY,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',

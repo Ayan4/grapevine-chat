@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { BG_BLACK_LIGHT, GRAY, PRIMARY, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { FontAwesome5 } from '@expo/vector-icons';
+import { BG_BLACK_LIGHT, GRAY, PRIMARY, WHITE_LIGHT } from "../colors";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { createChatApi } from "../network/FirestoreApiCall";
@@ -26,15 +26,15 @@ export default function UserChatCardWidget({username, uid, navigation, lastText}
     }
 
     return(
-        <Pressable onPress={handleSelect} style={styles.container}>
+        <TouchableOpacity onPress={handleSelect} style={styles.container}>
             <View style={styles.iconWrapper}>
-                <SimpleLineIcons style={styles.icon} name="user" size={24} color={PRIMARY} />
+                <FontAwesome5 style={styles.icon} name="user-alt" size={24} color={PRIMARY} />
             </View>
             <View style={styles.nameAndTextWrapper}>
                 <Text style={styles.username}>{capitalizeFirstLetter(username)}</Text>
                 {lastText && <Text style={styles.message}>{lastText}</Text>}
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 };
 
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     iconWrapper: {
-        borderWidth: 1,
-        borderColor: WHITE_LIGHT,
+        borderWidth: 2,
+        borderColor: PRIMARY,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',

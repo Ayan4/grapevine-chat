@@ -2,11 +2,10 @@ import { signOut } from "firebase/auth";
 import { useContext } from "react";
 import { StatusBar, StyleSheet, Text } from "react-native";
 import { View, Image } from "react-native";
-import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT, WHITE_PRIMARY } from "../colors";
+import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from "../colors";
 import { auth } from "../config/firebase";
 import { AuthContext } from "../context/AuthContextProvider";
-import { MaterialIcons } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { capitalizeFirstLetter } from "../helper/Util";
 
 export default function HeaderWidget(props: any){
@@ -19,7 +18,7 @@ export default function HeaderWidget(props: any){
             <Image style={styles.image} source={require('../assets/nav_logo.png')} />
             <View style={styles.headerHome}>
                 {routeName && <View style={styles.iconWrapper}>
-                    <SimpleLineIcons style={styles.icon} name="user" size={20} color={PRIMARY} />
+                    <FontAwesome style={styles.icon} name="user-o" size={17} color={PRIMARY} />
                 </View>}
                 {routeName && <Text style={styles.username}>{capitalizeFirstLetter(currentUser.displayName)}</Text>}
                 {routeName && <MaterialIcons style={styles.icon} name="logout" onPress={() => signOut(auth)} size={30} color={PRIMARY} />} 
@@ -52,13 +51,14 @@ const styles = StyleSheet.create({
     },
     iconWrapper: {
         borderWidth: 1,
-        borderColor: WHITE_LIGHT,
+        borderColor: PRIMARY,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 8
+        marginHorizontal: 5
     },
     icon: {
-        padding: 5
+        paddingVertical: 5,
+        paddingHorizontal: 6
     }
 })
