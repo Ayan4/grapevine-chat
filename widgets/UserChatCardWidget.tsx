@@ -4,17 +4,23 @@ import { BG_BLACK_LIGHT, PRIMARY, WHITE_LIGHT } from "../colors";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { createChatApi } from "../network/FirestoreApiCall";
+import { ChatContext } from "../context/ChatContextProvider";
+import { ACTION_TYPE_CONSTANTS } from "../types/UserTypes";
 
 interface UserChatCardWidgetProps {
     username: string;
     uid: string;
+    navigation: any
   }
 
-export default function UserChatCardWidget({username, uid}: UserChatCardWidgetProps){
+export default function UserChatCardWidget({username, uid, navigation}: UserChatCardWidgetProps){
     const {currentUser} = useContext(AuthContext);
+    const {dispatchAction} = useContext(ChatContext);
 
     async function handleSelect(){
         await createChatApi(currentUser, username, uid);
+        dispatchAction({type: ACTION_TYPE_CONSTANTS.CHANGE_USER, payload: {uid, username}});
+        navigation.navigate('Chat')
     }
 
     return(

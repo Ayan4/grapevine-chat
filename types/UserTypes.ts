@@ -12,3 +12,7 @@ export type userChats = {
 };
 
 export type userChatTree = [string, userChats];
+
+export const ACTION_TYPE_CONSTANTS = {
+    CHANGE_USER: "CHANGE_USER"
+}

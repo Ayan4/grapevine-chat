@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from '../colors';
-import { auth } from '../config/firebase';
 import { loginApi, signUpApi } from '../network/AuthApiCall';
 import { LoginScreenProps, SignupScreenProps } from '../types/NavigationTypes';
 const bgImage = require("../assets/backImage.png");
 
 export default function Auth({route, navigation}: LoginScreenProps | SignupScreenProps){
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('ayanshukla4@gmail.com');
+    const [password, setPassword] = useState('amanbabu');
     const [username, setUsername] = useState('');
 
     const isSignupScreen: boolean | undefined = route.params?.isSignup;

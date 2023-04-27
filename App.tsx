@@ -7,13 +7,14 @@ import { RootStackParamList } from './types/NavigationTypes';
 import HeaderWidget from './widgets/HeaderWidget';
 import HomePage from './screens/HomePage';
 import { AuthContext, AuthContextProvider } from './context/AuthContextProvider';
+import { ChatContextProvider } from './context/ChatContextProvider';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function ChatStack(){
   return (
-    <Stack.Navigator initialRouteName={'Home'}>
-      <Stack.Screen name='Home' component={HomePage} options={{header: (props) => <HeaderWidget {...props}/>}} />
+    <Stack.Navigator initialRouteName={'HomePage'}>
+      <Stack.Screen name='HomePage' component={HomePage} options={{header: (props) => <HeaderWidget {...props}/>}} />
       <Stack.Screen name='Chat' component={Chat} options={{header: () => <HeaderWidget/>}} />
     </Stack.Navigator>
   )
@@ -41,7 +42,9 @@ function RootNavigator(){
 export default function App() {
   return (
     <AuthContextProvider>
-      <RootNavigator/>
+      <ChatContextProvider>
+        <RootNavigator/>
+      </ChatContextProvider>
     </AuthContextProvider>
   );
 }

@@ -6,11 +6,12 @@ import { database } from "../config/firebase";
 import { AuthContext } from "../context/AuthContextProvider";
 import { searchChatUser } from "../helper/Util";
 import { getAllUsersApi } from "../network/FirestoreApiCall";
+import { HomeScreenProps } from "../types/NavigationTypes";
 import { User, userChatTree, userChats } from "../types/UserTypes";
 import SearchWidget from "../widgets/SearchWidget";
 import UserChatCardWidget from "../widgets/UserChatCardWidget";
 
-export default function HomePage(){
+export default function HomePage({navigation}: HomeScreenProps){
     const [users, setUsers] = useState<User[] | undefined>();
     const [usernameQuery, setUsernameQuery] = useState<string>('');
     const [chats, setChats] = useState<userChatTree[] | undefined>([]);
@@ -41,7 +42,7 @@ export default function HomePage(){
         <SafeAreaView style={styles.container}>
             <SearchWidget setUsernameQuery={setUsernameQuery} />
             <Text style={styles.heading}>Chats</Text>
-            <FlatList data={filteredUsers} renderItem={({item}) => <UserChatCardWidget username={item[1].userInfo.username} uid={item[1].userInfo.uid} />} keyExtractor={item => item[0]} />
+            <FlatList data={filteredUsers} renderItem={({item}) => <UserChatCardWidget navigation={navigation} username={item[1].userInfo.username} uid={item[1].userInfo.uid} />} keyExtractor={item => item[0]} />
         </SafeAreaView>
     )
 }
