@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContextProvider";
 import { createChatApi } from "../network/FirestoreApiCall";
 import { ChatContext } from "../context/ChatContextProvider";
 import { ACTION_TYPE_CONSTANTS } from "../types/UserTypes";
+import { capitalizeFirstLetter } from "../helper/Util";
 
 interface UserChatCardWidgetProps {
     username: string;
@@ -28,7 +29,7 @@ export default function UserChatCardWidget({username, uid, navigation}: UserChat
             <View style={styles.iconWrapper}>
                 <SimpleLineIcons style={styles.icon} name="user" size={24} color={PRIMARY} />
             </View>
-            <Text style={styles.username}>{username}</Text>
+            <Text style={styles.username}>{capitalizeFirstLetter(username)}</Text>
         </Pressable>
     )
 };

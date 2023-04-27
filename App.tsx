@@ -8,6 +8,7 @@ import HeaderWidget from './widgets/HeaderWidget';
 import HomePage from './screens/HomePage';
 import { AuthContext, AuthContextProvider } from './context/AuthContextProvider';
 import { ChatContextProvider } from './context/ChatContextProvider';
+import ChatHeaderWidget from './widgets/ChatHeaderWidget';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -15,7 +16,7 @@ function ChatStack(){
   return (
     <Stack.Navigator initialRouteName={'HomePage'}>
       <Stack.Screen name='HomePage' component={HomePage} options={{header: (props) => <HeaderWidget {...props}/>}} />
-      <Stack.Screen name='Chat' component={Chat} options={{header: () => <HeaderWidget/>}} />
+      <Stack.Screen name='Chat' component={Chat} options={{header: () => <ChatHeaderWidget/>}} />
     </Stack.Navigator>
   )
 }

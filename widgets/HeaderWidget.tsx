@@ -7,6 +7,7 @@ import { auth } from "../config/firebase";
 import { AuthContext } from "../context/AuthContextProvider";
 import { MaterialIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { capitalizeFirstLetter } from "../helper/Util";
 
 export default function HeaderWidget(props: any){
     const {currentUser} = useContext(AuthContext);
@@ -19,7 +20,7 @@ export default function HeaderWidget(props: any){
                 {routeName && <View style={styles.iconWrapper}>
                     <SimpleLineIcons style={styles.icon} name="user" size={20} color={PRIMARY} />
                 </View>}
-                {routeName && <Text style={styles.username}>{currentUser.displayName}</Text>}
+                {routeName && <Text style={styles.username}>{capitalizeFirstLetter(currentUser.displayName)}</Text>}
                 {routeName && <MaterialIcons style={styles.icon} name="logout" onPress={() => signOut(auth)} size={30} color={PRIMARY} />} 
             </View>
         </View>
