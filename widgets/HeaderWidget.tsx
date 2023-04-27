@@ -1,16 +1,22 @@
 import { signOut } from "firebase/auth";
-import { Button, StatusBar, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { Button, StatusBar, StyleSheet, Text } from "react-native";
 import { View, Image } from "react-native";
-import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY } from "../colors";
+import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from "../colors";
 import { auth } from "../config/firebase";
+import { AuthContext } from "../context/AuthContextProvider";
 
 export default function HeaderWidget(props: any){
+    const {currentUser} = useContext(AuthContext);
     const routeName = props?.route?.name;
     return(
         <View style={[styles.header, routeName && styles.headerHome]}>
             <StatusBar backgroundColor={BG_BLACK}/>
             <Image style={styles.image} source={require('../assets/nav_logo.png')} />
-            {routeName && <Button title='Logout' onPress={() => signOut(auth)} color={PRIMARY} />} 
+            <View style={styles.headerHome}>
+                {routeName && <Text style={styles.username}>{currentUser.displayName}</Text>}
+                {routeName && <Button title='Logout' onPress={() => signOut(auth)} color={PRIMARY} />} 
+            </View>
         </View>
     )
 };
@@ -26,7 +32,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     headerHome: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    username: {
+        color: WHITE_PRIMARY,
+        fontSize: 17,
+        paddingHorizontal: 10,
     },
     image: {
         width: '25%'

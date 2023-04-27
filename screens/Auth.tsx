@@ -1,9 +1,8 @@
-import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import { BG_BLACK, BG_BLACK_LIGHT, PRIMARY, WHITE_PRIMARY } from '../colors';
 import { auth } from '../config/firebase';
-import { setUserNameWithId } from '../network/AuthApiCall';
+import { loginApi, signUpApi } from '../network/AuthApiCall';
 import { LoginScreenProps, SignupScreenProps } from '../types/NavigationTypes';
 const bgImage = require("../assets/backImage.png");
 
@@ -12,20 +11,15 @@ export default function Auth({route, navigation}: LoginScreenProps | SignupScree
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
-    const [ createUserWithEmailAndPassword ] = useCreateUserWithEmailAndPassword(auth);
-    const [ signInWithEmailAndPassword ] = useSignInWithEmailAndPassword(auth);
-
     const isSignupScreen: boolean | undefined = route.params?.isSignup;
     const headerText = isSignupScreen ? 'Sign Up' : 'Login';
 
     function handleSubmit(){
         if(email && password){
             if(isSignupScreen){
-                // Signing up a new user and storing the username in the DB.
-                createUserWithEmailAndPassword(email, password).then((userCreds) => userCreds && setUserNameWithId(userCreds.user.uid, username));
+                signUpApi(email, password, username);
             }else{
-                // Login
-                signInWithEmailAndPassword(email, password).then((result) => result);
+                loginApi(email, password);
             }
         }
     }
