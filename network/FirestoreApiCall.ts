@@ -1,6 +1,6 @@
-import { doc, setDoc, collection, getDocs, query, where, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs, query, where, getDoc, updateDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { database } from "../config/firebase";
-import { User } from "../types/UserTypes";
+import { User, userChats } from "../types/UserTypes";
 
 const setUserChatsApi = async (uid: string) => {
     await setDoc(doc(database, 'userChats', uid), {});
@@ -26,7 +26,7 @@ export const getAllUsersApi = async (uid: string | undefined): Promise<User[] | 
     return userArray as User[];
 }
 
-export const createChatApi = async (currentUser: any, username: string, uid: string) => {
+export const createChatApi = async (currentUser: any, username: string, uid: string): Promise<void> => {
     const combinedId = currentUser.uid > uid ? currentUser.uid + uid : uid + currentUser.uid;
         try{
             const res = await getDoc(doc(database, 'chats', combinedId));
@@ -53,4 +53,4 @@ export const createChatApi = async (currentUser: any, username: string, uid: str
         }catch(err){
             console.log('Chat creation error', err)
         }
-}
+};

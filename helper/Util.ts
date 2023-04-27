@@ -1,6 +1,5 @@
-import { User } from "../types/UserTypes";
+import { userChatTree } from "../types/UserTypes";
 
-
-export function searchUser(users: User[], query: string) {
-    return users.filter(user => user.username.toLowerCase().includes(query.toLowerCase()));
+export function searchChatUser(users: userChatTree[], query: string) {
+    return users.filter(user => user[1].userInfo.username.toLowerCase().includes(query.toLowerCase()));
 }
