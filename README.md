@@ -25,7 +25,7 @@ Grapevine Chat is a full-stack mobile chat application built with React Native a
 
 ## Screenshots
 
-![screenshot 1](./screenshots/sc2/jpeg)
+![screenshot 1](./screenshots/sc2.jpeg)
 
 ![screenshot 2](./screenshots/sc4.jpeg)
 
