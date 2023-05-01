@@ -1,6 +1,6 @@
 # Grapevine Chat
 
-Grapevine Chat is a full-stack mobile chat application built with React Native and Firebase. Users can sign up and log in to the app using Firebase Authentication. Once logged in, users can search for other users and start one-on-one chats with multiple users. The app also provides state persistence, so users can view their chat history even after logging out.
+Grapevine Chat is a full-stack mobile chat application built with React Native and Firebase. Users can sign up and log in to the app using email and password, powered by Firebase Authentication. Once logged in, users can search for other users and start one-on-one chats with them. The app also provides state persistence, so users can view their chat history.
 
 ## Features
 
